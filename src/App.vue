@@ -44,11 +44,12 @@ export default {
 }
 
 .display {
-  width: 100%;
+  width: 92%;
   margin-bottom: 10px;
   padding: 10px;
   font-size: 18px;
   text-align: right;
+  
 }
 
 .buttons {
