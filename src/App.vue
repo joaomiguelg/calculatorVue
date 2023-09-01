@@ -1,74 +1,82 @@
+
+<script setup>
+import { reactive, ref } from 'vue';
+
+const state = reactive({
+  value1: "",
+  value2: "",
+  operator: "",
+  result: ""
+})
+
+const calcular = () => {
+
+  const num1 = parseFloat(state.value1);
+  const num2 = parseFloat(state.value2);
+
+  switch (state.operator) {
+    case 'add':
+      state.result = num1 + num2;
+      break;
+    case 'subtract':
+      state.result = num1 - num2;
+      break;
+    case 'multiply':
+      state.result = num1 * num2;
+      break;
+    case 'divide':
+      if (num2 === 0) {
+        state.result = 'Divisão por zero';
+      } else {
+        state.result = num1 / num2;
+      }
+      break;
+    default:
+      state.result = null;
+      break;
+  }
+
+  return state.result
+}
+
+</script>
+
 <template>
-  <div class="calculator">
-    <input v-model="display" class="display" disabled />
-    <div class="buttons">
-      <button v-for="button in buttons" :key="button" @click="handleClick(button)">
-        {{ button }}
-      </button>
-    </div>
+  <div class="container">
+    <header class="p-5 bg-light text-center">
+      <h1>Calculator Vue</h1>
+    </header>
+
+    <body>
+      <form>
+        <div class="container pt-5">
+          <div class="row gap-5 d-flex justify-content-center">
+            <input type="text" placeholder="Insert your first number" class="col-3" v-model="state.value1">
+            <input type="text" name="" id="" placeholder="Insert your second number" class="col-3" v-model="state.value2">
+          </div>
+          <div class="row d-flex justify-content-center pt-3">
+            <select class="col-1" v-model="state.operator">
+              <option value="add"> + </option>
+              <option value="subtract"> - </option>
+              <option value="multiply"> * </option>
+              <option value="divide"> / </option>
+            </select>
+          </div>
+        </div>
+        <div class="text-center pt-3">
+          <h3>Result:{{ calcular()}}</h3>
+        </div>
+      </form>
+    </body>
+
+
+
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      display: "",
-      buttons: ["7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", ".", "=", "+"],
-    };
-  },
-  methods: {
-    handleClick(button) {
-      if (button === "=") {
-        try {
-          this.display = eval(this.display).toString();
-        } catch (error) {
-          this.display = "Error";
-        }
-      } else {
-        this.display += button;
-      }
-    },
-  },
-};
-</script>
 
-<style scoped>
-.calculator {
-  width: 300px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
-.display {
-  width: 92%;
-  margin-bottom: 10px;
-  padding: 10px;
-  font-size: 18px;
-  text-align: right;
-  
-}
 
-.buttons {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
 
-button {
-  padding: 10px;
-  font-size: 16px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #ccc;
-}
-</style>
+<style scoped></style>
 
