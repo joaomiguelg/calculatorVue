@@ -1,6 +1,10 @@
 
 <script setup>
-import { reactive, ref } from 'vue';
+  import { reactive, ref } from 'vue';
+  import Cabecalho from './components/Cabecalho.vue'
+  import Inputs from './components/Inputs.vue'
+  import Operators from './components/Operators.vue'
+  import Result from './components/Result.vue'
 
 const state = reactive({
   value1: "",
@@ -16,7 +20,7 @@ const calcular = () => {
 
   switch (state.operator) {
     case 'add':
-      state.result = num1 + num2;
+      state.result = num1 + num2
       break;
     case 'subtract':
       state.result = num1 - num2;
@@ -43,40 +47,17 @@ const calcular = () => {
 
 <template>
   <div class="container">
-    <header class="p-5 bg-light text-center">
-      <h1>Calculator Vue</h1>
-    </header>
-
+    <Cabecalho />
     <body>
       <form>
         <div class="container pt-5">
-          <div class="row gap-5 d-flex justify-content-center">
-            <input type="text" placeholder="Insert your first number" class="col-3" v-model="state.value1">
-            <input type="text" name="" id="" placeholder="Insert your second number" class="col-3" v-model="state.value2">
-          </div>
-          <div class="row d-flex justify-content-center pt-3">
-            <select class="col-1" v-model="state.operator">
-              <option value="add"> + </option>
-              <option value="subtract"> - </option>
-              <option value="multiply"> * </option>
-              <option value="divide"> / </option>
-            </select>
-          </div>
-        </div>
-        <div class="text-center pt-3">
-          <h3>Result:{{ calcular()}}</h3>
+          <Inputs :value1="event => state.value1 = event.target.value" :value2="event => state.value2 = event.target.value"/>
+          <Operators :operator="event => state.operator = event.target.value" />
         </div>
       </form>
+      <Result :calcular="calcular()"/>
     </body>
-
-
-
   </div>
 </template>
 
-
-
-
-
-<style scoped></style>
 
